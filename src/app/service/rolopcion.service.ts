@@ -24,6 +24,6 @@ export class RolOpcionService {
 
   // Obtener todas las opciones
   getOpciones(): Observable<Opcion[]> {
-    return this.http.get<Opcion[]>('http://localhost:8080/opcion/list');
+    return this.http.get<Opcion[]>(`${this.apiUrl}/opcion/list`);
   }
 }
