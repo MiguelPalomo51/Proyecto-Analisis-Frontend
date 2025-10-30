@@ -1,6 +1,6 @@
 {
   "buildCommand": "npm run build",
-  "outputDirectory": "dist/frontalm14",
+  "outputDirectory": "dist/frontalm14/browser",
   "rewrites": [
     {
       "source": "/(.*)",
