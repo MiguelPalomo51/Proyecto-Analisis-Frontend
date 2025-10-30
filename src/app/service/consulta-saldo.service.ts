@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
+import { environment } from '../../environments/environment.prod';
 
 // Interfaces para la consulta de saldos
 export interface ConsultaSaldoRequest {
@@ -51,7 +52,7 @@ export interface ResultadoConsultaDto {
   providedIn: 'root'
 })
 export class ConsultaSaldoService {
-  private apiBase = 'http://localhost:8080/api';
+  private apiBase = environment.apiUrl + '/api';
 
   constructor(private http: HttpClient) { }
 
@@ -67,7 +68,7 @@ export class ConsultaSaldoService {
 
   // Consultar saldo por nombre y apellido
   consultarPorNombreApellido(nombre: string, apellido: string): Observable<SaldoCuentaEntity[]> {
-    return this.http.get<SaldoCuentaEntity[]>(`${this.apiBase}/saldo-cuentas/consultar-por-nombre`, 
+    return this.http.get<SaldoCuentaEntity[]>(`${this.apiBase}/saldo-cuentas/consultar-por-nombre`,
       { params: { nombre, apellido } }
     ).pipe(
       map(res => res || [])
@@ -84,7 +85,7 @@ export class ConsultaSaldoService {
     return this.http.get<TipoSaldoCuenta[]>(`${this.apiBase}/tipos-saldo-cuenta`);
   }
 
-  // Obtener todos los status de cuenta  
+  // Obtener todos los status de cuenta
   obtenerStatusCuenta(): Observable<StatusCuenta[]> {
     return this.http.get<StatusCuenta[]>(`${this.apiBase}/statuscuenta`);
   }

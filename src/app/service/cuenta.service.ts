@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment.prod';
 
 export interface CuentaDto {
   idsaldocuenta: number;
@@ -21,7 +22,7 @@ export interface CreateCuentaRequest {
   idstatuscuenta: number; // Long en backend, pero JavaScript maneja como number
   idtiposaldocuenta: number;
   saldoanterior?: number; // BigDecimal en backend
-  debitos?: number; // BigDecimal en backend  
+  debitos?: number; // BigDecimal en backend
   creditos?: number; // BigDecimal en backend
   fechacreacion?: string; // Date en backend, se envía como ISO string
   usuariocreacion?: string;
@@ -60,14 +61,14 @@ export interface StatusCuenta {
   providedIn: 'root'
 })
 export class CuentaService {
-  private apiBase = 'http://localhost:8080/api';
+  private apiBase = environment.apiUrl + '/api';
   private base = `${this.apiBase}/saldo-cuentas`;
 
   constructor(private http: HttpClient) { }
 
   // Método para obtener nombre completo de persona por ID
   obtenerNombrePersonaPorId(idPersona: number): Observable<string> {
-    return this.http.get(`http://localhost:8080/${idPersona}`, { responseType: 'text' });
+    return this.http.get(`${this.apiBase}${idPersona}`, { responseType: 'text' });
   }
 
   // Método para obtener documentos de una persona
@@ -126,6 +127,6 @@ export class CuentaService {
 
   // Obtener status de cuenta desde la base de datos
   getStatusCuenta(): Observable<StatusCuenta[]> {
-    return this.http.get<StatusCuenta[]>(`http://localhost:8080/api/statuscuenta`);
+    return this.http.get<StatusCuenta[]>(`${this.apiBase}/statuscuenta`);
   }
 }

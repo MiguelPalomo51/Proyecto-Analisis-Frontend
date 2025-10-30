@@ -3,11 +3,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { RolOpcion, RolOpcionDTO } from '../entity/rolopcion';
 import { Opcion } from '../entity/opcion';
+import { environment } from '../../environments/environment.prod';
 
 
 @Injectable({ providedIn: 'root' })
 export class RolOpcionService {
-  private apiUrl = 'http://localhost:8080/roleopcion';
+  private apiUrl = environment.apiUrl + '/api/roleopcion';
 
   constructor(private http: HttpClient) {}
 
@@ -20,7 +21,7 @@ export class RolOpcionService {
   guardarRoleOpcion(roleOpciones: RolOpcionDTO[]): Observable<any> {
   return this.http.post(`${this.apiUrl}/guardar`, roleOpciones);
 }
-  
+
   // Obtener todas las opciones
   getOpciones(): Observable<Opcion[]> {
     return this.http.get<Opcion[]>('http://localhost:8080/opcion/list');
